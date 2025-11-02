@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Базовые растровые алгоритмы</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Базовые растровые алгоритмы</h1>
+            <div class="controls">
+                <div class="algorithm-selector">
+                    <select id="algorithmSelect">
+                        <option value="step">Пошаговый алгоритм</option>
+                        <option value="dda">Алгоритм ЦДА</option>
+                        <option value="bresenham">Алгоритм Брезенхема (линия)</option>
+                        <option value="castle">Алгоритм Кастла-Питвея</option>
+                        <option value="circle">Алгоритм Брезенхема (окружность)</option>
+                    </select>
+                    <button onclick="drawSelectedAlgorithm()">Запуск</button>
+                    <button onclick="clearCanvas()">Очистить</button>
+                </div>
+                
+                <div class="input-group">
+                    <label>X1: <input type="number" id="x1" value="10"></label>
+                    <label>Y1: <input type="number" id="y1" value="10"></label>
+                    <label>X2: <input type="number" id="x2" value="50"></label>
+                    <label>Y2: <input type="number" id="y2" value="30"></label>
+                    <label id="radiusLabel">Радиус: <input type="number" id="radius" value="20"></label>
+                </div>
+
+                <div class="scale-control">
+                    <label id="scaleValue">Масштаб: 20.0</label>
+                    <input type="range" id="scale" min="5" max="50" value="20" step="1" onchange="updateScale()">
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="canvas-container">
+                <canvas id="canvas" width="800" height="600"></canvas>
+                <div class="coordinates">Перетащите для перемещения, колесо для масштаба</div>
+            </div>
+
+            <div class="results">
+                <div id="timing">Выберите алгоритм и нажмите "Запуск"</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>  
+<script src="js/ui.js"></script>
+</body>
+</html>
