@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Алгоритмы отсечения отрезков и многоугольников</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="controls">
+        <h3>Алгоритмы отсечения</h3>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('midpoint')">Средней точки</div>
+            <div class="tab" onclick="switchTab('sutherland-hodgman')">Сазерленда-Ходжмана</div>
+        </div>
+        
+        <div id="midpoint-tab" class="tab-content active">
+            <label for="segments">Отрезки (x1 y1 x2 y2):</label><br>
+            <textarea id="segments" rows="5" cols="30">-60 -60 60 60
+-80 0 80 0
+0 -80 0 80
+-70 -40 70 40
+-50 -70 50 70</textarea><br><br>
+            <label for="window">Окно (Xmin Ymin Xmax Ymax):</label><br>
+            <input type="text" id="window" value="-50 -50 50 50"><br><br>
+        </div>
+        
+        <div id="sutherland-hodgman-tab" class="tab-content">
+            <label for="clipPolygon">Отсекающий многоугольник (x y - по одной паре на строку):</label><br>
+            <textarea id="clipPolygon" rows="6" cols="20">-40 -40
+-40 40
+40 40
+40 -40</textarea><br>
+            <label for="subjectPolygons">Отсекаемые многоугольники (x1 y1 x2 y2 x3 y3...):</label><br>
+            <textarea id="subjectPolygons" rows="6" cols="30">-60 -60 -60 60 60 60 60 -60
+-50 0 0 50 50 0 0 -50
+-30 -70 0 -30 30 -70
+-70 0 -50 30 -10 30 10 0 -10 -30 -50 -30
+20 20 20 60 60 60 60 20</textarea><br><br>
+        </div>
+        
+        <div class="scale-control">
+            <label for="scale">Масштаб:</label>
+            <input type="number" id="scale" min="1" max="20" value="5" onchange="updateScale()">
+        </div>
+        <div class="zoom-hint">Используйте колесико мыши на холсте для изменения масштаба</div>
+        
+        <div class="button-group">
+            <button onclick="draw()">Отобразить</button>
+            <button onclick="clearCanvas()">Очистить</button>
+        </div>
+        
+        <div class="description">
+            <div id="midpoint-desc">
+                <strong>Алгоритм средней точки:</strong> Отсекает отрезки прямоугольным окном.
+                Исходные отрезки - красным, видимые части - зеленым.
+                <div class="algorithm-info">
+                    <h4>Особенности алгоритма:</h4>
+                    <ul>
+                        <li>Рекурсивно делит отрезок пополам</li>
+                        <li>Проверяет видимость средней точки</li>
+                        <li>Продолжает для видимых частей</li>
+                        <li>Подходит только для прямоугольных окон</li>
+                        <li>Сложность: O(log n)</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="sutherland-hodgman-desc">
+                <strong>Алгоритм Сазерленда-Ходжмана:</strong> Отсекает многоугольники выпуклым многоугольником.
+                Исходные многоугольники - красным, видимые части - зеленым.
+                <div class="algorithm-info">
+                    <h4>Особенности алгоритма:</h4>
+                    <ul>
+                        <li>Работает с выпуклыми отсекающими многоугольниками</li>
+                        <li>Отсекает произвольные многоугольники</li>
+                        <li>Последовательно обрабатывает каждое ребро отсекателя</li>
+                        <li>Сохраняет многоугольную структуру</li>
+                        <li>Сложность: O(n×m) где n,m - числа вершин</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="canvas" width="600" height="600"></canvas>
+
+    <script src="script.js"></script>
+</body>
+</html>
